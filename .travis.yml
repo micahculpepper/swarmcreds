@@ -2,4 +2,6 @@ language: bash
 before_install:
   - sudo apt-get update
   - sudo apt-get install -y devscripts shellcheck
-script: shellcheck swarmcreds.sh && checkbashisms swarmcreds.sh
+script:
+  - shellcheck swarmcreds.sh
+  - checkbashisms swarmcreds.sh
