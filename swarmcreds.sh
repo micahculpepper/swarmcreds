@@ -74,7 +74,7 @@ EOF
 # Get the ID of the running container we just made
 
 containerid=$(\
-    docker inspect $(docker stack ps -q swarmcreds) \
+    docker inspect "$(docker stack ps -q swarmcreds)" \
     --format '{{.Status.ContainerStatus.ContainerID}}')
 
 
