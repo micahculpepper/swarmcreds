@@ -67,8 +67,13 @@ services:
           - node.id == ${nodeid}
     secrets: $(cat "$secretlist")
 
+    networks:
+      - default
+
 secrets: $(cat "$secretsection")
 
+networks:
+  default:
 EOF
 
 
