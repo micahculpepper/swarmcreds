@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/micahculpepper/swarmcreds.svg?branch=master)](https://travis-ci.org/micahculpepper/swarmcreds)
+
 # swarmcreds
 
 Show the secrets stored in your Docker Swarm.
