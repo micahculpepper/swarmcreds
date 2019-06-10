@@ -82,7 +82,7 @@ containerid=$(\
 
 for name in $names; do
     secret=$(docker exec "$containerid" /bin/cat "/run/secrets/${name}")
-    printf "${name}\t${secret}\n"
+    printf "%s\t%s\n" "$name" "$secret"
 done
 
 
