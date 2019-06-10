@@ -77,8 +77,9 @@ networks:
 EOF
 
 
-# Get the ID of the running container we just made
+# Wait a bit for it to start, then get the ID of the running container we just made
 
+sleep 2
 containerid=$(\
     docker inspect "$(docker stack ps -q swarmcreds)" \
     --format '{{.Status.ContainerStatus.ContainerID}}')
