@@ -37,7 +37,7 @@ fi
 
 # Build the image we will use for accessing credentials
 
-cat << EOF | docker build -t swarmcreds:latest . -f -
+cat << EOF | docker build -t swarmcreds:latest . -f - > /dev/null
 FROM alpine:latest
 CMD ["sh", "-c", "while /bin/true ; do sleep 5; done"]
 EOF
@@ -56,7 +56,7 @@ for name in $names; do
     printf "\n  %s:\n    external: true" "$name" >> "$secretsection"
 done
 
-cat << EOF | docker stack deploy -c - swarmcreds
+cat << EOF | docker stack deploy -c - swarmcreds > /dev/null
 version: '3.7'
 services:
   swarmcreds:
@@ -96,4 +96,4 @@ done
 # Clean up
 
 rm "$secretlist" "$secretsection"
-docker stack rm swarmcreds
+docker stack rm swarmcreds > /dev/null
