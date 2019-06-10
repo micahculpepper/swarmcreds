@@ -47,12 +47,13 @@ EOF
 # that will give us access to the credentials we're looking for
 
 nodeid=$(docker node ls --format '{{.Self}}\t{{.ID}}' | awk '/true/ {print $2}')
-NL=$(printf "\n")
-secretlist=""
-secretsection=""
+secretlist=swarmcreds.secretlist.tmp
+printf "" > "$secretlist"
+secretsection=swarmcreds.secretsection.tmp
+printf "" > "$secretsection"
 for name in $names; do
-    secretlist="${secretlist}      - ${name}${NL}"
-    secretsection="${secretsection}  ${name}:${NL}    external: true${NL}"
+    printf "\n      - %s" "$name" >> "$secretlist"
+    printf "\n  %s:\n    external: true" "$name" >> "$secretsection"
 done
 
 cat << EOF | docker stack deploy -c - swarmcreds
@@ -64,10 +65,10 @@ services:
       placement:
         constraints:
           - node.id == ${nodeid}
-    secrets:
-${secretlist}
-secrets:
-${secretsection}
+    secrets: $(cat "$secretlist")
+
+secrets: $(cat "$secretsection")
+
 EOF
 
 
@@ -88,4 +89,5 @@ done
 
 # Clean up
 
+rm "$secretlist" "$secretsection"
 docker stack rm swarmcreds
